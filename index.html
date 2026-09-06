@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090c14">
+<title>Nexora • App Store</title>
+<style>
+:root{--bg:#090c14;--card:#121725;--card2:#181e2e;--text:#f7f8fc;--muted:#9ea7bc;--line:#252d41;--a:#6d5dfc;--b:#4da3ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;padding-bottom:86px}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:10;background:#090c14ed;border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
+.head{max-width:1100px;margin:auto;padding:14px 18px;display:flex;gap:12px;align-items:center}
+.brand{display:flex;align-items:center;gap:9px;color:#fff;text-decoration:none;font-size:22px;font-weight:900;white-space:nowrap}
+.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--a),var(--b));font-size:25px}
+.search{flex:1;position:relative;min-width:80px}.search span{position:absolute;left:13px;top:8px;font-size:22px;color:var(--muted)}
+.search input{width:100%;padding:12px 12px 12px 40px;border-radius:14px;border:1px solid var(--line);outline:0;background:var(--card);color:#fff}
+.btn,.primary,.secondary{border-radius:14px;padding:11px 15px;font-weight:800}
+.btn,.secondary{border:1px solid var(--line);background:var(--card2);color:#fff}.primary{border:0;color:#fff;background:linear-gradient(100deg,var(--a),var(--b))}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}.hero{padding:45px 0 20px}
+h1{font-size:clamp(36px,8vw,58px);line-height:1.02;margin:0 0 15px;letter-spacing:-1.5px}
+.gradient{background:linear-gradient(90deg,#fff,#8dbaff);color:transparent;background-clip:text;-webkit-background-clip:text}
+.hero p{max-width:650px;color:var(--muted);font-size:18px;line-height:1.5}.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 20px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 15px}.chip.active{color:#fff;background:#222844}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:14px}.app{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px}
+.appTop{display:flex;gap:12px;align-items:center}.icon{width:60px;height:60px;border-radius:16px;object-fit:cover;background:#252b40;flex:none}
+.app h3{margin:0 0 3px;font-size:19px}.desc{color:#c8cede;line-height:1.45;min-height:42px}.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin:12px 0}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:20px}
+.profile{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#252b40}
+.hidden{display:none!important}.modal{position:fixed;inset:0;background:#000b;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}
+.sheet{width:min(680px,100%);max-height:92vh;overflow:auto;background:#111624;border:1px solid var(--line);border-radius:22px;padding:20px}.close{float:right}
+.field{margin:12px 0}.field label{display:block;margin-bottom:6px;font-weight:700}
+.field input,.field textarea,.field select{width:100%;padding:12px;background:#0a0e17;border:1px solid var(--line);border-radius:11px;color:#fff;outline:0}.field textarea{min-height:100px;resize:vertical}
+.notice{padding:13px;border-radius:14px;background:#241f17;border:1px solid #5d4c1c;color:#f2d993}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#101522f5;border-top:1px solid var(--line);z-index:20}
+.nav{max-width:650px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);padding:7px}.nav button{border:0;background:transparent;color:var(--muted);padding:8px 4px;border-radius:14px;font-weight:700}.nav button.active{background:#1b2132;color:#fff}
+.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:12px 15px;border-radius:13px;font-weight:800;display:none;z-index:50;max-width:92%;text-align:center}
+.loading{text-align:center;padding:35px;color:var(--muted)}
+@media(min-width:760px){.bottom{display:none}body{padding-bottom:20px}}
+@media(max-width:520px){.brand{font-size:20px}.logo{width:42px;height:42px}.head{padding:12px}.search input{min-width:0}.head .btn{padding:11px 12px}.hero{padding-top:38px}}
+</style>
+</head>
+<body>
+<header><div class="head">
+<a class="brand" href="#" onclick="page('home');return false"><span class="logo">N</span><span>Nexora</span></a>
+<div class="search"><span>⌕</span><input id="search" type="search" placeholder="Search apps..." autocomplete="off"></div>
+<button class="btn" id="authBtn">Google</button>
+</div></header>
+
+<main class="wrap">
+<section id="home">
+<div class="hero"><h1>Discover apps.<br><span class="gradient">Built for everyone.</span></h1>
+<p>Discover approved apps and submit your own project to Nexora.</p>
+<div class="row"><button class="primary" onclick="submitApp()">＋ Add Your APK</button><button class="secondary" onclick="page('profile')">My Profile</button></div></div>
+<div id="chips" class="chips"></div><div id="apps" class="grid"><div class="loading">Loading apps...</div></div>
+</section>
+
+<section id="profile" class="hidden"><div class="hero"><h1>My Profile</h1><p>Sign in with Google to see your profile and submission information.</p></div><div id="profileBox"></div></section>
+</main>
+
+<div class="bottom"><nav class="nav">
+<button data-p="home" onclick="page('home')">⌂<br>Home</button>
+<button data-p="home" onclick="focusSearch()">⌕<br>Search</button>
+<button data-p="submit" onclick="submitApp()">＋<br>Add APK</button>
+<button data-p="profile" onclick="page('profile')">♙<br>Profile</button>
+</nav></div>
+
+<div id="appModal" class="modal"><div class="sheet"><button class="btn close" onclick="closeM('appModal')">✕</button><div id="details"></div></div></div>
+
+<div id="submitModal" class="modal"><div class="sheet"><button class="btn close" onclick="closeM('submitModal')">✕</button>
+<h2>Submit an app</h2><div class="notice">Your app will stay pending until an admin approves it.</div>
+<form id="form">
+<div class="field"><label>App name *</label><input id="name" required maxlength="80"></div>
+<div class="field"><label>Developer *</label><input id="dev" required maxlength="80"></div>
+<div class="field"><label>Category *</label><select id="cat"></select></div>
+<div class="field"><label>Icon URL</label><input id="icon" type="url" placeholder="https://..."></div>
+<div class="field"><label>APK / Download URL *</label><input id="url" type="url" required placeholder="https://..."></div>
+<div class="field"><label>Version</label><input id="version" value="1.0.0"></div>
+<div class="field"><label>Size</label><input id="size" placeholder="e.g. 24 MB"></div>
+<div class="field"><label>Description *</label><textarea id="desc" required maxlength="1000"></textarea></div>
+<button class="primary" id="submitBtn">Submit for review</button>
+</form></div></div>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import{getAuth,GoogleAuthProvider,signInWithRedirect,getRedirectResult,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import{getFirestore,collection,addDoc,onSnapshot,query,where,limit,serverTimestamp,doc,setDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDPT1RO7G4X_MCBu5yUnxd5pzA5JzbNmnU",
+  authDomain: "nexora-d43be.firebaseapp.com",
+  projectId: "nexora-d43be",
+  storageBucket: "nexora-d43be.firebasestorage.app",
+  messagingSenderId: "798522694457",
+  appId: "1:798522694457:web:27caf64f0c371e02fe26e8",
+  measurementId: "G-CXPK4FJ7RB"
+};
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const safeUrl=v=>{try{const u=new URL(v);return["http:","https:"].includes(u.protocol)?u.href:"#"}catch{return"#"}};
+const toast=m=>{ $("toast").textContent=m;$("toast").style.display="block";clearTimeout(window.__t);window.__t=setTimeout(()=>$("toast").style.display="none",3500) };
+
+const categories=["All","Education","Games","Tools","Productivity","Social","Entertainment","Other"];
+let activeCategory="All",user=null,apps=[];
+
+function renderCategories(){
+ $("chips").innerHTML=categories.map(c=>`<button class="chip ${c===activeCategory?"active":""}" onclick="selectCategory('${esc(c)}')">${esc(c)}</button>`).join("");
+ $("cat").innerHTML=categories.slice(1).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+}
+window.selectCategory=c=>{activeCategory=c;renderCategories();renderApps()};
+
+function filteredApps(){
+ const term=$("search").value.toLowerCase().trim();
+ return apps.filter(a=>{
+  const okCat=activeCategory==="All"||a.category===activeCategory;
+  const text=[a.name,a.developer,a.description,a.category].map(v=>String(v||"").toLowerCase()).join(" ");
+  return okCat&&(!term||text.includes(term));
+ });
+}
+function renderApps(){
+ const list=filteredApps();
+ $("apps").innerHTML=list.length?list.map(a=>`
+ <article class="app"><div class="appTop">
+ <img class="icon" src="${safeUrl(a.iconUrl)}" alt="" onerror="this.style.visibility='hidden'">
+ <div><h3>${esc(a.name||"Untitled")}</h3><div class="muted">${esc(a.developer||"Unknown developer")}</div><div class="muted">${esc(a.category||"Other")}</div></div>
+ </div><p class="desc">${esc(a.description||"No description.")}</p>
+ <div class="meta"><span>v${esc(a.version||"1.0.0")}</span><span>${esc(a.size||"")}</span></div>
+ <button class="primary" onclick="openApp('${esc(a.id)}')">View app</button></article>`).join(""):`<div class="empty">No approved apps found.</div>`;
+}
+window.openApp=id=>{
+ const a=apps.find(x=>x.id===id);if(!a)return;
+ $("details").innerHTML=`<div class="appTop"><img class="icon" src="${safeUrl(a.iconUrl)}" alt=""><div><h2>${esc(a.name)}</h2><div class="muted">${esc(a.developer)} • ${esc(a.category)}</div></div></div>
+ <p>${esc(a.description||"No description.")}</p><div class="meta"><span>Version ${esc(a.version||"1.0.0")}</span><span>${esc(a.size||"")}</span></div>
+ <div class="notice">Install only software you trust.</div><br>
+ <a class="primary" style="display:inline-block;text-decoration:none" href="${safeUrl(a.downloadUrl)}" target="_blank" rel="noopener noreferrer">Download</a>`;
+ $("appModal").classList.add("show");
+};
+window.closeM=id=>$(id).classList.remove("show");
+window.page=p=>{$("home").classList.toggle("hidden",p!=="home");$("profile").classList.toggle("hidden",p!=="profile");if(p==="profile")renderProfile();window.scrollTo({top:0,behavior:"smooth"})};
+window.focusSearch=()=>{page("home");setTimeout(()=>$("search").focus(),150)};
+window.submitApp=()=>{if(!user){toast("Please sign in with Google first.");login();return}$("submitModal").classList.add("show")};
+
+async function login(){try{await signInWithRedirect(auth,provider)}catch(e){console.error(e);toast("Google login failed: "+(e.message||e.code||"Unknown error"))}}
+window.login=login;
+async function handleRedirectResult(){
+ try{await getRedirectResult(auth)}
+ catch(e){
+  console.error("Redirect result error:",e);
+  if(e.code==="auth/api-key-not-valid-please-pass-a-valid-api-key")toast("Firebase API key invalid. Check Firebase API settings.");
+  else if(e.code==="auth/unauthorized-domain")toast("Add dhannjayuphade.github.io to Firebase Authorized domains.");
+  else toast("Google login failed: "+(e.message||e.code||"Unknown error"));
+ }
+}
+window.logout=()=>signOut(auth);
+$("authBtn").onclick=()=>user?window.logout():login();
+$("search").addEventListener("input",renderApps);
+
+$("form").addEventListener("submit",async e=>{
+ e.preventDefault();if(!user)return toast("Please sign in first.");
+ const b=$("submitBtn");b.disabled=true;b.textContent="Submitting...";
+ try{
+  await addDoc(collection(db,"apps"),{name:$("name").value.trim(),developer:$("dev").value.trim(),category:$("cat").value,iconUrl:$("icon").value.trim(),downloadUrl:$("url").value.trim(),version:$("version").value.trim()||"1.0.0",size:$("size").value.trim(),description:$("desc").value.trim(),status:"pending",submittedBy:user.uid,submittedByEmail:user.email||"",createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+  e.target.reset();$("version").value="1.0.0";closeM("submitModal");toast("App submitted. Waiting for admin approval.");
+ }catch(err){console.error(err);toast("Submission failed. Check Firestore rules.")}finally{b.disabled=false;b.textContent="Submit for review"}
+});
+
+function renderProfile(){
+ if(!user){$("profileBox").innerHTML=`<div class="profile"><h2>Sign in required</h2><p class="muted">Use Google to access your Nexora profile.</p><button class="primary" onclick="login()">Continue with Google</button></div>`;return}
+ $("profileBox").innerHTML=`<div class="profile"><div class="appTop"><img class="avatar" src="${safeUrl(user.photoURL)}" alt="" onerror="this.style.visibility='hidden'"><div><h2>${esc(user.displayName||"Nexora User")}</h2><div class="muted">${esc(user.email||"")}</div></div></div><br><button class="secondary" onclick="logout()">Sign out</button></div>`;
+}
+onAuthStateChanged(auth,async u=>{
+ user=u;$("authBtn").textContent=u?"Sign out":"Google";renderProfile();
+ if(u)try{await setDoc(doc(db,"users",u.uid),{uid:u.uid,name:u.displayName||"",email:u.email||"",photoURL:u.photoURL||"",lastLogin:serverTimestamp()},{merge:true})}catch(e){console.warn(e)}
+});
+onSnapshot(query(collection(db,"apps"),where("status","==","approved"),limit(100)),s=>{apps=s.docs.map(d=>({id:d.id,...d.data()}));renderApps()},e=>{console.error(e);$("apps").innerHTML=`<div class="empty">Could not load apps. Check Firebase/Firestore configuration and rules.</div>`});
+renderCategories();renderApps();renderProfile();handleRedirectResult();
+</script>
+</body>
+</html>
